@@ -1,0 +1,79 @@
+generated: '2026-09-13'
+method: probed
+source: >-
+  Live unauthenticated GET of the named /.well-known/ path list against every host this
+  record knows: the registrable domain apex (aheadgene.com), www.aheadgene.com (the only
+  public website AheadGene serves) and system.aheadgene.com (the internal management
+  console linked from that page). No host serves any well-known document.
+note: >-
+  RECORDED ABSENCE — no common[] WellKnown or SecurityTxt pointer is emitted from this file.
+  www.aheadgene.com returns a genuine nginx 404 for every path. system.aheadgene.com is a
+  single-page-application catch-all that answers HTTP 200 with the same 12,023-byte HTML
+  login shell for EVERY path probed, including paths that cannot exist; those 200s are
+  recorded as misses, not as served documents. system.aheadgene.com additionally publishes
+  robots.txt with "User-agent: * / Disallow: /", so it was probed once for discovery and
+  not crawled further. The apex aheadgene.com presents a self-signed TLS certificate and
+  could not be probed over HTTPS at all.
+hosts:
+- host: aheadgene.com
+  note: >-
+    HTTPS handshake fails — the apex presents a self-signed certificate (notBefore 2026-06-08,
+    notAfter 2036-06-05, empty subject/issuer). No path could be probed.
+  documents: []
+- host: www.aheadgene.com
+  server: nginx/1.22.1
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: system.aheadgene.com
+  note: >-
+    SPA catch-all. Every path returns 200 with an identical HTML login shell; treated as a
+    miss on every document. robots.txt (the one real response, 25 bytes) disallows all agents.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    result: spa-shell-not-a-document
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: null
+    result: spa-shell-not-a-document
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: null
+    result: spa-shell-not-a-document
+  - path: /.well-known/api-catalog
+    status: 200
+    file: null
+    result: spa-shell-not-a-document
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    file: null
+    result: spa-shell-not-a-document
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    result: spa-shell-not-a-document
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    result: spa-shell-not-a-document

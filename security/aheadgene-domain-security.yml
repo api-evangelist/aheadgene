@@ -1,0 +1,27 @@
+generated: '2026-09-13'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: aheadgene.com
+  https: false
+  tls_version: null
+  cert_expires: null
+  hsts: null
+  note: >-
+    Apex presents a SELF-SIGNED certificate (empty subject and issuer, notBefore 2026-06-08,
+    notAfter 2036-06-05); the TLS handshake fails verification, so https://aheadgene.com/ is
+    unreachable to any ordinary client. Only the www host is usable.
+- host: www.aheadgene.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  8 23:59:59 2026 GMT
+  hsts: false
+  cert_issuer: TrustAsia DV TLS RSA CA 2024
+domains:
+- domain: aheadgene.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: false
+  mx: [mxbiz1.qq.com, mxbiz2.qq.com]
+  spf_record: v=spf1 include:spf.mail.qq.com ~all
